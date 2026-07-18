@@ -128,28 +128,6 @@ def fetch_commit_total(username: str) -> int:
     return 0
 
 
-def fetch_lines_of_code(username: str, cache_dir="cache"):
-    """
-    Placeholder for the full clone-and-diff LOC calculation. Cloning + `git log
-    --numstat` across every repo is expensive, so this is intentionally left as
-    a stub that reads/writes a cache file. Wire in the full clone loop here if
-    you want exact LOC tracking; until then it returns cached values (0 on
-    first run) so the workflow never fails.
-    """
-    os.makedirs(cache_dir, exist_ok=True)
-    cache_file = os.path.join(cache_dir, "loc_cache.txt")
-    added, removed = 0, 0
-    if os.path.exists(cache_file):
-        with open(cache_file) as f:
-            line = f.read().strip()
-            if line:
-                parts = line.split(",")
-                if len(parts) == 2:
-                    added, removed = int(parts[0]), int(parts[1])
-    else:
-        with open(cache_file, "w") as f:
-            f.write(f"{added},{removed}")
-    return added, removed, added - removed
 
 
 # ---------------------------------------------------------------------------

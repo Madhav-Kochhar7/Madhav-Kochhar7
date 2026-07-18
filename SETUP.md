@@ -37,9 +37,3 @@ All static fields (OS, education, languages, tools, achievements, contact) live 
 the top of `today.py` in the `FIELDS` / `CONTACT` dicts — edit those and the next
 workflow run (or a manual trigger) regenerates the SVGs automatically.
 
-## Note on "Lines of Code"
-Precisely computing total lines added/removed across every repo (like the reference
-project) requires cloning each repo and running `git log --numstat`, which is slow
-and rate-limit-heavy. `fetch_lines_of_code()` in `today.py` is left as a clearly
-marked stub with caching already wired up — plug in the clone loop there if you want
-exact numbers; until then it just carries over whatever's cached (0 on first run).

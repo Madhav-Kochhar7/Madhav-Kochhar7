@@ -70,7 +70,7 @@ def calculate_uptime(birth_date: datetime.date) -> str:
 
 
 # ---------------------------------------------------------------------------
-# DYNAMIC: GitHub stats (repos, stars, followers, commits, lines of code)
+# DYNAMIC: GitHub stats (repos, stars, followers, commits)
 # ---------------------------------------------------------------------------
 
 API = "https://api.github.com"
@@ -146,7 +146,7 @@ def esc(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def build_rows(uptime: str, stats: dict, commits: int, loc):
+def build_rows(uptime: str, stats: dict, commits: int):
     """Returns a list of row descriptors."""
     rows = [("prompt", PROMPT)]
     for item in FIELDS:
@@ -200,13 +200,10 @@ def row_char_len(row) -> int:
     if row[0] == "statline":
         text = "   |   ".join(f"{k}: {v}" for k, v in row[1])
         return len(text)
-    if row[0] == "loc":
-        _, net, added, removed = row
-        return len(f". Lines of Code: {net:,} ( {added:,}++, {removed:,}-- )")
     return 0
 
 
-def render_svg(mode: str, uptime: str, stats: dict, commits: int, loc) -> str:
+def render_svg(mode: str, uptime: str, stats: dict, commits: int) -> str:
     if mode == "dark":
         bg = "#161b22"
         base_text = "#c9d1d9"
@@ -224,7 +221,7 @@ def render_svg(mode: str, uptime: str, stats: dict, commits: int, loc) -> str:
         add_color = "#1a7f37"
         del_color = "#cf222e"
 
-    rows = build_rows(uptime, stats, commits, loc)
+    rows = build_rows(uptime, stats, commits)
     max_chars = max(row_char_len(r) for r in rows)
     text_x = PAD_X
     width = int(text_x + max_chars * CHAR_W + PAD_X)
@@ -269,19 +266,6 @@ def render_svg(mode: str, uptime: str, stats: dict, commits: int, loc) -> str:
                     segs.append("<tspan> | </tspan>")
                 segs.append(f"<tspan class='key'>{esc(k)}</tspan><tspan class='cc'>: </tspan><tspan class='value'>{esc(v)}</tspan>")
             body.append("".join(segs))
-        elif kind == "loc":
-            _, net, added, removed = row
-            body.append(
-                f"<tspan x='{text_x}' y='{y}' class='cc'>. </tspan>"
-                f"<tspan class='key'>Lines of Code</tspan>"
-                f"<tspan class='cc'>: </tspan>"
-                f"<tspan class='value'>{net:,}</tspan>"
-                f"<tspan> ( </tspan>"
-                f"<tspan class='addColor'>{added:,}++</tspan>"
-                f"<tspan>, </tspan>"
-                f"<tspan class='delColor'>{removed:,}--</tspan>"
-                f"<tspan> )</tspan>"
-            )
         y += LINE_HEIGHT
 
     height = y + PAD_BOTTOM
@@ -312,10 +296,9 @@ def main():
     uptime = calculate_uptime(BIRTH_DATE)
     stats = fetch_basic_stats(USERNAME)
     commits = fetch_commit_total(USERNAME)
-    loc = fetch_lines_of_code(USERNAME)
 
-    dark_svg = render_svg("dark", uptime, stats, commits, loc)
-    light_svg = render_svg("light", uptime, stats, commits, loc)
+    dark_svg = render_svg("dark", uptime, stats, commits)
+    light_svg = render_svg("light", uptime, stats, commits)
 
     with open("dark_mode.svg", "w") as f:
         f.write(dark_svg)
@@ -324,7 +307,7 @@ def main():
 
     print("Generated dark_mode.svg and light_mode.svg")
     print(f"Uptime: {uptime}")
-    print(f"Stats: {stats}, commits={commits}, loc={loc}")
+    print(f"Stats: {stats}, commits={commits}")
 
 
 if __name__ == "__main__":

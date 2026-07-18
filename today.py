@@ -150,7 +150,7 @@ def build_rows(uptime: str, stats: dict, commits: int, loc):
     """Returns a list of row descriptors."""
     added, removed, net = loc
     rows = [("prompt", PROMPT)]
-
+    rows.append(("loc", net, added, removed))
     for item in FIELDS:
         if item is None:
             rows.append(("blank",))

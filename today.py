@@ -148,9 +148,7 @@ def esc(s: str) -> str:
 
 def build_rows(uptime: str, stats: dict, commits: int, loc):
     """Returns a list of row descriptors."""
-    added, removed, net = loc
     rows = [("prompt", PROMPT)]
-    rows.append(("loc", net, added, removed))
     for item in FIELDS:
         if item is None:
             rows.append(("blank",))
@@ -169,7 +167,6 @@ def build_rows(uptime: str, stats: dict, commits: int, loc):
     rows.append(("section", "GitHub Stats"))
     rows.append(("statline", [("Repos", f"{stats['repos']:,}"), ("Stars", f"{stats['stars']:,}")]))
     rows.append(("statline", [("Commits", f"{commits:,}"), ("Followers", f"{stats['followers']:,}")]))
-    rows.append(("loc", net, added, removed))
     return rows
 
 

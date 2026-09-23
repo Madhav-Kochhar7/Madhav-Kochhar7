@@ -24,11 +24,12 @@ PROMPT = "madhav@kochhar"
 BIRTH_DATE = datetime.date(2006, 12, 7)
 
 FIELDS = [
-    ("OS", "Windows 11, Linux"),
+    ("OS", "Linux, Windows 11"),
     ("Uptime", None),  # filled in dynamically
     ("Host", "Chitkara University"),               # metaphor: where I'm "hosted"
     ("Kernel", "BE CSE 3.0 (3rd Semester)"),        # metaphor: core version
-    ("IDE", "VS Code, nvim, vim, nano"),
+    ("Benchmark", "9.27 / 10.0 "),
+    ("IDE", "VS Code, nvim, vim, nano"),              # metaphor : CGPA / GRADES
     None,  # blank line
     ("Languages.Programming", "Python, Java, C, JavaScript"),
     ("Languages.Computer", "HTML, CSS, JSON"),

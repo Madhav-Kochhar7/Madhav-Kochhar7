@@ -33,9 +33,9 @@ FIELDS = [
     None,  # blank line
     ("Languages.Programming", "Python, Java, C, JavaScript"),
     ("Languages.Computer", "HTML, CSS, JSON"),
-    ("Frameworks.Web", "React.js, Next.js, Node.js, FastAPI"),
+    ("Frameworks.Web", "React.js, Express.js, Node.js, FastAPI"),
     ("Frameworks.Web3", "Wagmi, Viem, ConnectKit"),
-    ("DevOps & Tools", "Git, Docker, Docker Compose, Redis, Bash, Linux, Celery, MySQL, MongoDB, PostgreSQL"),
+    ("DevOps & Tools", "Git, Docker, Docker Compose, Redis, Bash, Linux, SQL(PostgreSQL), MongoDB"),
     None,
     ("Currently.Learning", "LLM Internals, Full-Stack Development"),
     None,
